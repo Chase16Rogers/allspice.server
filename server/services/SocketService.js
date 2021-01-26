@@ -1,8 +1,8 @@
-import SocketIO from 'socket.io'
 import { Auth0Provider } from '@bcwdev/auth0provider'
-import { logger } from '../utils/Logger'
+import SocketIO from 'socket.io'
 import { attachHandlers } from '../../Setup'
-import { accountService } from './accountService'
+import { logger } from '../utils/Logger'
+import { accountService } from './AccountService'
 class SocketService {
   io = SocketIO();
   /**
@@ -72,7 +72,7 @@ class SocketService {
           return
         }
         this.io.emit('UserDisconnected', socket.userInfo.id)
-      } catch (e) {}
+      } catch (e) { }
     }
   }
 
