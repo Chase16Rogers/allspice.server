@@ -13,15 +13,4 @@ const Account = new Schema(
   { timestamps: true, _id: false, toJSON: { virtuals: true } }
 )
 
-// Account.pre('findOneAndDelete', function(next) {
-//   try {
-//     Promise.all([
-//       recipeService.deleteMany({ boardId: this._conditions._id }),
-//       commentsService.deleteMany({ boardId: this._conditions._id })
-//     ])
-//   } catch (e) {
-//     next(e)
-//   }
-// })
-
 export default Account

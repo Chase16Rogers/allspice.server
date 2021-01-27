@@ -26,12 +26,4 @@ Recipe.virtual('creator', {
   justOne: true
 })
 
-// Recipe.pre('findOneAndDelete', function(next) {
-//   try {
-//     commentsService.deleteMany({ recipeId: this._conditions._id })
-//   } catch (e) {
-//     next(e)
-//   }
-// })
-
 export default Recipe
