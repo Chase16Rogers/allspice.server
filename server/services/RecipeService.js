@@ -2,6 +2,10 @@ import { dbContext } from '../db/DbContext'
 import { BadRequest } from '../utils/Errors'
 
 class RecipesService {
+  async deleteMany(query) {
+    await dbContext.Recipes.deleteMany(query)
+  }
+
   async find(query = {}) {
     const recipes = await dbContext.Recipes.find(query).populate('creator', 'name picture email')
     return recipes
@@ -21,6 +25,35 @@ class RecipesService {
   async create(body) {
     const newRecipe = await dbContext.Recipes.create(body)
     return await this.findOne({ _id: newRecipe.id })
+  }
+
+  async addIngredient(body) {
+    const updated = await dbContext.Recipes.findOneAndUpdate({ _id: body.recipeId, creatorId: body.creatorId }, { $push: { ingredients: body } }, { new: true, runValidators: true })
+    return updated
+
+    // const recipe = await this.findOne({ _id: body.recipeId, creatorId: body.creatorId })
+    // recipe.ingredients.push(body)
+    // await recipe.save()
+    // return recipe
+  }
+
+  async removeIngredient(body) {
+    const updated = await dbContext.Recipes
+      .findOneAndUpdate({ _id: body.recipeId, creatorId: body.creatorId },
+        {
+          $pull: {
+            ingredients: {
+              _id: body.ingredientId
+            }
+          }
+        },
+        { new: true, runValidators: true })
+    return updated
+
+    // const recipe = await this.findOne({ _id: body.recipeId, creatorId: body.creatorId })
+    // recipe.ingredients.push(body)
+    // await recipe.save()
+    // return recipe
   }
 
   async update(body) {

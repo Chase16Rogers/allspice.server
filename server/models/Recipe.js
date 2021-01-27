@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 const Ingredient = new Schema({
   name: { type: String, required: true },
   quantity: { type: String, required: true }
+  // creatorId: { type: String, ref: 'Account', required: true }
 })
 
 const Recipe = new Schema(
@@ -24,5 +25,13 @@ Recipe.virtual('creator', {
   foreignField: '_id',
   justOne: true
 })
+
+// Recipe.pre('findOneAndDelete', function(next) {
+//   try {
+//     commentsService.deleteMany({ recipeId: this._conditions._id })
+//   } catch (e) {
+//     next(e)
+//   }
+// })
 
 export default Recipe
