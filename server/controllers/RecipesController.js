@@ -35,7 +35,6 @@ export class RecipesController extends BaseController {
 
   async create(req, res, next) {
     try {
-      req.body.creatorId = req.userInfo.id
       const data = await recipeService.create(req.body)
       res.send(data)
     } catch (error) {
@@ -45,7 +44,6 @@ export class RecipesController extends BaseController {
 
   async addIngredient(req, res, next) {
     try {
-      req.body.creatorId = req.userInfo.id
       req.body.recipeId = req.params.id
       const data = await recipeService.addIngredient(req.body)
       res.send(data)
@@ -56,7 +54,6 @@ export class RecipesController extends BaseController {
 
   async edit(req, res, next) {
     try {
-      req.body.creatorId = req.userInfo.id
       req.body.id = req.params.id
       delete req.body.ingredients
       const data = await recipeService.update(req.body)

@@ -7,7 +7,7 @@ class RecipesService {
   }
 
   async find(query = {}) {
-    const recipes = await dbContext.Recipes.find(query).populate('creator', 'name picture email')
+    const recipes = await dbContext.Recipes.find(query)
     return recipes
   }
 
@@ -15,7 +15,7 @@ class RecipesService {
    * @param {Object} query
    */
   async findOne(query) {
-    const recipe = await dbContext.Recipes.findOne(query).populate('creator', 'name picture email')
+    const recipe = await dbContext.Recipes.findOne(query)
     if (!recipe) {
       throw new BadRequest('Invalid Query')
     }
@@ -24,7 +24,7 @@ class RecipesService {
 
   async create(body) {
     const newRecipe = await dbContext.Recipes.create(body)
-    return await this.findOne({ _id: newRecipe.id })
+    return newRecipe
   }
 
   async addIngredient(body) {
