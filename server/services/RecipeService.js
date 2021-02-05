@@ -30,11 +30,6 @@ class RecipesService {
   async addIngredient(body) {
     const updated = await dbContext.Recipes.findOneAndUpdate({ _id: body.recipeId, creatorId: body.creatorId }, { $push: { ingredients: body } }, { new: true, runValidators: true })
     return updated
-
-    // const recipe = await this.findOne({ _id: body.recipeId, creatorId: body.creatorId })
-    // recipe.ingredients.push(body)
-    // await recipe.save()
-    // return recipe
   }
 
   async removeIngredient(body) {
@@ -49,11 +44,6 @@ class RecipesService {
         },
         { new: true, runValidators: true })
     return updated
-
-    // const recipe = await this.findOne({ _id: body.recipeId, creatorId: body.creatorId })
-    // recipe.ingredients.push(body)
-    // await recipe.save()
-    // return recipe
   }
 
   async update(body) {
