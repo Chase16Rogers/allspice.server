@@ -14,16 +14,9 @@ const Recipe = new Schema(
     imgUrl: { type: String },
     steps: [{ type: String }],
     ingredients: [Ingredient],
-    creatorId: { type: String, ref: 'Account', required: true }
+    creatorName: { type: String, required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
 )
-
-Recipe.virtual('creator', {
-  localField: 'creatorId',
-  ref: 'Account',
-  foreignField: '_id',
-  justOne: true
-})
 
 export default Recipe
