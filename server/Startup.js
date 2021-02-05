@@ -2,7 +2,7 @@ import bp from 'body-parser'
 import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
-import { Paths, RegisterControllers, RegisterSocketHandlers } from '../Setup'
+import { Paths, RegisterControllers } from '../Setup'
 import { logger } from './utils/Logger'
 
 export default class Startup {
@@ -26,7 +26,6 @@ export default class Startup {
   static ConfigureRoutes(app) {
     const router = express.Router()
     RegisterControllers(router)
-    RegisterSocketHandlers()
     app.use(router)
 
     app.use('', express.static(Paths.Public))

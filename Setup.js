@@ -15,10 +15,6 @@ export class Paths {
   static get Controllers() {
     return this.Server + '/controllers'
   }
-
-  static get Handlers() {
-    return this.Server + '/handlers'
-  }
 }
 
 export function RegisterControllers(router) {
@@ -47,28 +43,6 @@ export function RegisterControllers(router) {
 }
 
 const HANDLERS = []
-
-export async function RegisterSocketHandlers() {
-  const directory = Paths.Handlers
-  const handlers = fs.readdirSync(directory)
-  handlers.forEach(async(handlerName) => {
-    try {
-      if (!handlerName.endsWith('.js')) { return }
-      const fileHandler = await import(directory + '/' + handlerName)
-      let HandlerClass = fileHandler[handlerName.slice(0, -3)]
-      if (HandlerClass.default) {
-        HandlerClass = HandlerClass.default
-      }
-      HANDLERS.push(HandlerClass)
-    } catch (e) {
-      logger.error(
-        '[SOCKET_HANDLER_ERROR] unable to attach socket handler, potential duplication, review mount path and controller class name, and see error below',
-        handlerName,
-        e
-      )
-    }
-  })
-}
 
 export async function attachHandlers(io, socket, user, profile) {
   HANDLERS.forEach(Handler => {
