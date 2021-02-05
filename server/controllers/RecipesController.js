@@ -1,4 +1,3 @@
-import { Auth0Provider } from '@bcwdev/auth0provider'
 import { recipeService } from '../services/RecipeService'
 import BaseController from '../utils/BaseController'
 
@@ -9,7 +8,6 @@ export class RecipesController extends BaseController {
       .get('', this.getAll)
       .get('/:id', this.getById)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
-      .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .post('/:id/ingredients', this.addIngredient)
       .put('/:id', this.edit)
