@@ -2,10 +2,6 @@ import { dbContext } from '../db/DbContext'
 import { BadRequest } from '../utils/Errors'
 
 class RecipesService {
-  async deleteMany(query) {
-    await dbContext.Recipes.deleteMany(query)
-  }
-
   async find(query = {}) {
     const recipes = await dbContext.Recipes.find(query)
     return recipes
@@ -28,13 +24,13 @@ class RecipesService {
   }
 
   async addIngredient(body) {
-    const updated = await dbContext.Recipes.findOneAndUpdate({ _id: body.recipeId, creatorId: body.creatorId }, { $push: { ingredients: body } }, { new: true, runValidators: true })
+    const updated = await dbContext.Recipes.findOneAndUpdate({ _id: body.recipeId }, { $push: { ingredients: body } }, { new: true, runValidators: true })
     return updated
   }
 
   async removeIngredient(body) {
     const updated = await dbContext.Recipes
-      .findOneAndUpdate({ _id: body.recipeId, creatorId: body.creatorId },
+      .findOneAndUpdate({ _id: body.recipeId },
         {
           $pull: {
             ingredients: {
@@ -47,7 +43,7 @@ class RecipesService {
   }
 
   async update(body) {
-    const updated = await dbContext.Recipes.findOneAndUpdate({ _id: body.id, creatorId: body.creatorId }, body, { new: true, runValidators: true })
+    const updated = await dbContext.Recipes.findOneAndUpdate({ _id: body.id }, body, { new: true, runValidators: true })
     if (!updated) {
       throw new BadRequest('Invalid Id or Access')
     }

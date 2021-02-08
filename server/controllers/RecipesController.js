@@ -75,7 +75,7 @@ export class RecipesController extends BaseController {
 
   async deleteIngredient(req, res, next) {
     try {
-      const query = { recipeId: req.params.recipeId, creatorId: req.userInfo.id, ingredientId: req.params.id }
+      const query = { recipeId: req.params.recipeId, ingredientId: req.params.id }
       await recipeService.removeIngredient(query)
       res.send({ message: 'Successfully Deleted' })
     } catch (error) {

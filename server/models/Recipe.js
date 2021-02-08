@@ -4,7 +4,6 @@ const Schema = mongoose.Schema
 const Ingredient = new Schema({
   name: { type: String, required: true },
   quantity: { type: String, required: true }
-  // creatorId: { type: String, ref: 'Account', required: true }
 })
 
 const Recipe = new Schema(
