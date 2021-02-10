@@ -9,7 +9,7 @@ const Ingredient = new Schema({
 const Recipe = new Schema(
   {
     title: { type: String, required: true },
-    description: { type: String, required: true },
+    description: { type: String, required: true, maxlength: 500 },
     imgUrl: { type: String },
     steps: [{ type: String }],
     ingredients: [Ingredient],

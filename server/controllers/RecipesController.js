@@ -11,6 +11,7 @@ export class RecipesController extends BaseController {
       .post('', this.create)
       .post('/:id/ingredients', this.addIngredient)
       .put('/:id', this.edit)
+      .put('/:recipeId/ingredients/:id', this.editIngredient)
       .delete('/:id', this.delete)
       .delete('/:recipeId/ingredients/:id', this.deleteIngredient)
   }
@@ -58,6 +59,16 @@ export class RecipesController extends BaseController {
       delete req.body.ingredients
       const data = await recipeService.update(req.body)
       res.send(data)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async editIngredient(req, res, next) {
+    try {
+      const query = { recipeId: req.params.recipeId, ingredientId: req.params.id }
+      await recipeService.editIngredient(query, req.body)
+      res.send({ message: 'Successfully Deleted' })
     } catch (error) {
       next(error)
     }

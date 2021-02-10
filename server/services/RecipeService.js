@@ -50,6 +50,14 @@ class RecipesService {
     return updated
   }
 
+  async editIngredient(query, body) {
+    const recipe = await dbContext.Recipes.findOneAndUpdate({ _id: query.recipeId, 'ingredient._id': query.ingredientId }, { $set: { 'ingredients.$': body } }, { new: true })
+    if (!recipe) {
+      throw new BadRequest('Invalid Id or Access')
+    }
+    return recipe
+  }
+
   async delete(query) {
     const deleted = await dbContext.Recipes.findOneAndRemove(query)
     if (!deleted) {
