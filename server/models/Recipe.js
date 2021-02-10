@@ -15,7 +15,7 @@ const Recipe = new Schema(
     ingredients: [Ingredient],
     creatorName: { type: String, required: true }
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  { toJSON: { virtuals: true } }
 )
 
 export default Recipe
