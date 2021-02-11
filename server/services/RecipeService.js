@@ -2,10 +2,6 @@ import { dbContext } from '../db/DbContext'
 import { BadRequest } from '../utils/Errors'
 
 class RecipesService {
-  async deleteMany(query) {
-    await dbContext.Recipes.deleteMany(query)
-  }
-
   async find(query = {}) {
     const recipes = await dbContext.Recipes.find(query).populate('creator', 'name picture email')
     return recipes
@@ -52,6 +48,21 @@ class RecipesService {
       throw new BadRequest('Invalid Id or Access')
     }
     return updated
+  }
+
+  async editIngredient(query, body) {
+    const recipe = await dbContext.Recipes.findOne({ _id: query.recipeId, creatorId: query.creatorId })
+    if (!recipe) {
+      throw new BadRequest('Invalid Recipe Id or Access')
+    }
+    const ingredient = recipe.ingredients.id(query.ingredientId)
+    if (!ingredient) {
+      throw new BadRequest('Invalid Ingredient Id')
+    }
+    ingredient.name = body.name || ingredient.name
+    ingredient.quantity = body.quantity || ingredient.quantity
+    await recipe.save()
+    return recipe
   }
 
   async delete(query) {
