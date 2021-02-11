@@ -61,7 +61,7 @@ class RecipesService {
     }
     ingredient.name = body.name || ingredient.name
     ingredient.quantity = body.quantity || ingredient.quantity
-    recipe.save()
+    await recipe.save()
     return recipe
   }
 
