@@ -51,7 +51,7 @@ class RecipesService {
   }
 
   async editIngredient(query, body) {
-    const recipe = await dbContext.Recipes.findOne({ _id: query.recipeId, creatorId: query.creatorId })
+    const recipe = await dbContext.Recipes.findOne({ _id: query.recipeId, creatorId: query.creatorId }).populate('creator', 'name picture email')
     if (!recipe) {
       throw new BadRequest('Invalid Recipe Id or Access')
     }
