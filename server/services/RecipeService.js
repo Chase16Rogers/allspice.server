@@ -56,6 +56,9 @@ class RecipesService {
       throw new BadRequest('Invalid Id or Access')
     }
     const ingredient = recipe.ingredients.id(query.ingredientId)
+        if (!ingredient) {
+      throw new BadRequest('Invalid Ingredient Id')
+    }
     ingredient.name = body.name || ingredient.name
     ingredient.quantity = body.quantity || ingredient.quantity
     recipe.save()
